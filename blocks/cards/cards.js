@@ -6,9 +6,21 @@ export default function decorate(block) {
   [...block.children].forEach((row) => {
     const li = document.createElement('li');
     while (row.firstElementChild) li.append(row.firstElementChild);
+    const targetAnchor = li.querySelector('a');
     [...li.children].forEach((div) => {
       if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-card-image';
-      else div.className = 'cards-card-body';
+      else {
+        div.className = 'cards-card-body';
+
+        if (targetAnchor) {
+          const wrapperAnchor = document.createElement('a');
+          wrapperAnchor.href = targetAnchor.href;
+          wrapperAnchor.innerHTML = div.innerHTML;
+
+          div.innerHTML = '';
+          div.appendChild(wrapperAnchor);
+        }
+      }
     });
     ul.append(li);
   });

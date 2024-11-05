@@ -1,9 +1,10 @@
-# Your Project's Title...
-Your project's description...
+# Elsie - AEM EDS Project...
+Sample project using AEM Edge Delivery Services 
 
 ## Environments
-- Preview: https://main--{repo}--{owner}.aem.page/
-- Live: https://main--{repo}--{owner}.aem.live/
+- Preview: https://main--elsie--samircaus.aem.page/
+- Live: https://main--elsie--samircaus.aem.live/
+- CDN: https://www.scaus.art/
 
 ## Installation
 

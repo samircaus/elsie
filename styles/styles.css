@@ -129,12 +129,17 @@ blockquote {
   margin-bottom: 0.25em;
 }
 
-code,
-pre {
+code, pre, samp {
+  font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
 }
 
+code, samp {
+  padding: .125em;
+}
+
 pre {
+  overflow: scroll;
   padding: 16px;
   border-radius: 8px;
   background-color: var(--light-color);
