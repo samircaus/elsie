@@ -15,9 +15,9 @@
   --background-color: white;
   --light-color: #f8f8f8;
   --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --text-color: #3d240b;
+  --link-color: #715531;
+  --link-hover-color: #d4b595;
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
@@ -167,7 +167,7 @@ a:any-link {
 
 a:hover {
   color: var(--link-hover-color);
-  text-decoration: underline;
+  text-decoration: wavy;
 }
 
 /* buttons */
