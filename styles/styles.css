@@ -16,8 +16,8 @@
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --text-color: #3d240b;
-  --link-color: #715531;
-  --link-hover-color: #d4b595;
+  --link-color: #d4b595;
+  --link-hover-color: #715531;
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
