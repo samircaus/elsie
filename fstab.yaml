@@ -1,5 +1,0 @@
-mountpoints:
-  /:
-    url: "https://author-p125048-e1434060.adobeaemcloud.com/bin/franklin.delivery/samircaus/elsie/main"
-    type: "markup"
-    suffix: ".html"
