@@ -11,7 +11,16 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  getMetadata,
+  sampleRUM
 } from './aem.js';
+import {
+  initMartech,
+  updateUserConsent,
+  martechEager,
+  martechLazy,
+  martechDelayed,
+} from '../plugins/martech/src/index.js';
 
 /**
  * Builds hero block and prepends to main in a new section.
@@ -72,13 +81,46 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
+  const isConsentGiven = true; // /* hook in your consent check here to make sure you can run personalization use cases. */
+  const martechLoadedPromise = initMartech(
+    // The WebSDK config
+    // Documentation: https://experienceleague.adobe.com/en/docs/experience-platform/web-sdk/commands/configure/overview#configure-js
+    {
+      datastreamId: '2abbf90c-e4a4-4077-b6f2-046b463a4f9e',
+      orgId: 'B504732B5D3B2A790A495ECF@AdobeOrg',
+      onBeforeEventSend: (payload) => {
+        // set custom Target params 
+        // see doc at https://experienceleague.adobe.com/en/docs/platform-learn/migrate-target-to-websdk/send-parameters#parameter-mapping-summary
+        payload.data.__adobe.target ||= {};
+
+        // set custom Analytics params
+        // see doc at https://experienceleague.adobe.com/en/docs/analytics/implementation/aep-edge/data-var-mapping
+        payload.data.__adobe.analytics ||= {};
+      }
+    },
+    // The library config
+    {
+      analytics: false, // whether to track data in Adobe Analytics (AA)
+      alloyInstanceName: 'alloy', // the name of the global WebSDK instance
+      dataLayer: true, // whether to use the Adobe Client Data Layer (ACDL)
+      dataLayerInstanceName: 'adobeDataLayer', // the name of the global ACDL instance
+      includeDataLayerState: true, // whether to include the whole data layer state on every event sent
+      launchUrls: ['https://assets.adobedtm.com/6a203c8a0ff8/bb846fdd3b08/launch-7668fb698976-development.min.js'], // the list of Launch containers to load
+      personalization: !!getMetadata('target') && isConsentGiven, // whether to apply page personalization from Adobe Target (AT) or Adobe Journey Optimizer (AJO)
+      performanceOptimized: true, // whether to use the agressive performance optimized approach or more traditional
+      personalizationTimeout: 1000, // the amount of time to wait (in ms) before bailing out and continuing page rendering
+    }
+  );
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
-    await loadSection(main.querySelector('.section'), waitForFirstImage);
+    await Promise.all([
+      martechLoadedPromise.then(martechEager),
+      loadSection(main.querySelector('.section'), waitForFirstImage),
+    ]);
   }
 
   try {
@@ -106,6 +148,10 @@ async function loadLazy(doc) {
   loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
 
+  // await import('./rum-to-analytics.js');
+  await martechLazy();
+  sampleRUM('lazy');
+
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
 }
@@ -116,7 +162,10 @@ async function loadLazy(doc) {
  */
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => import('./delayed.js'), 3000);
+  window.setTimeout(() => {
+    martechDelayed();
+    return import('./delayed.js');
+  }, 3000);
   // load anything that can be postponed to the latest here
 }
 
