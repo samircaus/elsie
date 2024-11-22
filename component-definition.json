@@ -55,20 +55,6 @@
               }
             }
           }
-        },
-        {
-          "title": "Teaser",
-          "id": "teaser",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/teaser/v1/button",
-                "template": {
-                  "model": "teaser"
-                }
-              }
-            }
-          }
         }
       ]
     },
