@@ -1,9 +1,9 @@
 # Your Project's Title...
-Your project's description...
+Demo project of the Edge Delivery Services
 
 ## Environments
-- Preview: https://main--{repo}--{owner}.aem.page/
-- Live: https://main--{repo}--{owner}.aem.live/
+- Preview: https://main--elsie--samircaus.aem.page/
+- Live: https://main--elsie--samircaus.aem.live/
 
 ## Documentation
 
