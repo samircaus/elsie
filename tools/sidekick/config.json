@@ -3,6 +3,20 @@
   "editUrlLabel": "AEM Editor",
   "plugins": [
     {
+      "id": "review",
+      "title": "Review...",
+      "environments": [
+        "dev",
+        "preview",
+        "review"
+      ],
+      "url": "https://labs.aem.live/tools/snapshot-admin/palette.html",
+      "isPopover": true,
+      "popoverRect": "width:200px; height: 200px",
+      "passConfig": true,
+      "passReferrer": true
+    },
+    {
       "id": "aemedit",
       "title": "Edit",
       "environments": [ "dev", "preview", "live" ],
