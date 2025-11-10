@@ -9,4 +9,7 @@ helix-importer-ui
 .idea
 
 .vscode/
-.aider*
+
+# Ensure these files are tracked
+!CLAUDE.md
+!AGENTS.md
